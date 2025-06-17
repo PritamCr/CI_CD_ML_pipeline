@@ -23,15 +23,16 @@ update-branch:
 	git commit -am "Update with new results"
 	git push --force origin HEAD:update
 
-hf-login:
-    git pull origin update
-    git switch update
-    pip install -U "huggingface_hub[cli]"
-    huggingface-cli login --token $(HF) --add-to-git-credential
+hf-login: 
+	pip install -U "huggingface_hub[cli]"
+	git pull origin update
+	git switch update
+	huggingface-cli login --token $(HF) --add-to-git-credential
 
-push-hub:
-    huggingface-cli upload PritamCr/Drug-Classification ./App --repo-type=space --commit-message="Sync App files" --token=$(HF) --create-pr
-    huggingface-cli upload PritamCr/Drug-Classification ./Model /Model --repo-type=space --commit-message="Sync Model" --token=$(HF) --create-pr
-    huggingface-cli upload PritamCr/Drug-Classification ./Results /Metrics --repo-type=space --commit-message="Sync Model" --token=$(HF) --create-pr
+push-to-huggingface: 
+	huggingface-cli upload PritamCr/Drug-Classification ./App --repo-type=space --commit-message="Sync App files" --token=$(HF) --create-pr
+	huggingface-cli upload PritamCr/Drug-Classification ./Model /Model --repo-type=space --commit-message="Sync Model" --token=$(HF) --create-pr
+	huggingface-cli upload PritamCr/Drug-Classification ./Results /Metrics --repo-type=space --commit-message="Sync Metrics" --token=$(HF) --create-pr
 
-deploy: hf-login push-hub
+deploy-to-huggingface: hf-login push-to-huggingface
+
