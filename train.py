@@ -16,17 +16,16 @@ drug_df = pd.read_csv("Data/drug.csv")
 drug_df = drug_df.sample(frac=1)
 
 
-
 X = drug_df.drop("Drug", axis=1).values
 y = drug_df.Drug.values
 
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.3, random_state=125)
+    X, y, test_size=0.3, random_state=125
+)
 
 
-
-cat_col = [1,2,3]
-num_col = [0,4]
+cat_col = [1, 2, 3]
+num_col = [0, 4]
 
 transform = ColumnTransformer(
     [
@@ -44,7 +43,6 @@ pipe = Pipeline(
 pipe.fit(X_train, y_train)
 
 
-
 predictions = pipe.predict(X_test)
 accuracy = accuracy_score(y_test, predictions)
 f1 = f1_score(y_test, predictions, average="macro")
@@ -59,10 +57,9 @@ disp.plot()
 plt.savefig("Results/model_results.png", dpi=120)
 
 
-
 sio.dump(pipe, "Model/drug_pipeline.skops")
 
-  
+
 trusted_list = [
     SimpleImputer,
     StandardScaler,
@@ -70,7 +67,7 @@ trusted_list = [
     RandomForestClassifier,
     Pipeline,
     ColumnTransformer,
-    np.dtype
+    np.dtype,
 ]
 
 pipeline = sio.load("Model/drug_pipeline.skops", trusted=trusted_list)
