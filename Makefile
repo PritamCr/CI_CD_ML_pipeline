@@ -30,9 +30,9 @@ hf-login:
 	huggingface-cli login --token $(HF) --add-to-git-credential
 
 push-to-huggingface: 
-	huggingface-cli upload PritamCr/Drug-Classification ./App --repo-type=space --commit-message="Sync App files" --token=$(HF) --verbose
-	huggingface-cli upload PritamCr/Drug-Classification ./Model /Model --repo-type=space --commit-message="Sync Model" --token=$(HF) --verbose
-	huggingface-cli upload PritamCr/Drug-Classification ./Results /Metrics --repo-type=space --commit-message="Sync Metrics" --token=$(HF)--verbose 
+	huggingface-cli upload PritamCr/Drug-Classification ./App --repo-type=space --commit-message="Sync App files" --token=$(HF)
+	huggingface-cli upload PritamCr/Drug-Classification ./Model /Model --repo-type=space --commit-message="Sync Model" --token=$(HF)
+	huggingface-cli upload PritamCr/Drug-Classification ./Results /Metrics --repo-type=space --commit-message="Sync Metrics" --token=$(HF)
 
 deploy-to-huggingface: hf-login push-to-huggingface
 
